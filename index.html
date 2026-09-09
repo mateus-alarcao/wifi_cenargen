@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Wifi-Cenargen - Acesso Visitante</title>
+
+    <!-- GovBR-DS Web Components -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@govbr-ds/core/dist/core-tokens.min.css">
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/@govbr-ds/webcomponents/dist/webcomponents/webcomponents.esm.js"></script>
+
+    <script>var submitted = false;</script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            width: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #444;
+            background: #f5f5f5;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        /* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
+        .gov-header {
+            height: 92px;
+            min-height: 92px;
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .12);
+        }
+
+        .gov-header-inner {
+            height: 100%;
+            display: flex;
+            align-items: flex-start;
+            padding: 10px 30px 0 29px;
+            position: relative;
+        }
+
+
+        /* GOV.BR */
+
+        .gov-logo {
+            font-weight: 900;
+            font-size: 30px;
+            line-height: 30px;
+            letter-spacing: -3px;
+            margin-right: 40px;
+            padding-top: 0;
+            white-space: nowrap;
+        }
+
+        .gov-logo .g {
+            color: #1681c4;
+        }
+
+        .gov-logo .o {
+            color: #f6a800;
+        }
+
+        .gov-logo .v {
+            color: #4cac44;
+        }
+
+        .gov-logo .b {
+            color: #1681c4;
+        }
+
+        .gov-logo .r {
+            color: #fcbc14;
+        }
+
+
+        /* EMPRESA */
+
+        .gov-company {
+            border-left: 1px solid #d5d5d5;
+            padding-left: 30px;
+            margin-top: 4px;
+            height: 40px;
+            display: flex;
+            font-size: 11px;
+            color: #555;
+        }
+
+
+        /* MENU */
+
+        .gov-nav {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 15px;
+            color: #2769b0;
+            white-space: nowrap;
+        }
+
+        .gov-nav a {
+            color: #2769b0;
+            text-decoration: none;
+        }
+
+
+        /* BOTÃO ENTRAR DO CABEÇALHO */
+
+        .login-pill {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #2769b0;
+            height: 25px;
+            padding: 0 12px;
+            border-radius: 15px;
+            background: #f7f7f7;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: bold;
+            font-size: 11px;
+            border: 0;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .login-pill:hover {
+            background: #eeeeee;
+        }
+
+
+        /* ÍCONE */
+
+        .login-icon {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #155ba0;
+            position: relative;
+            display: inline-block;
+        }
+
+        .login-icon:after {
+            content: "";
+            position: absolute;
+            width: 7px;
+            height: 4px;
+            border-radius: 7px 7px 3px 3px;
+            background: #155ba0;
+            left: 2.5px;
+            top: 9px;
+        }
+
+
+        /* IDENTIFICAÇÃO DA REDE */
+
+        .network-title {
+            position: absolute;
+            left: 29px;
+            top: 44px;
+            font-size: 12px;
+            color: #444;
+        }
+
+        .network-subtitle {
+            position: absolute;
+            left: 29px;
+            top: 67px;
+            font-size: 10px;
+            color: #555;
+        }
+
+
+        /* =========================================================
+   CONTEÚDO
+   ========================================================= */
+
+        .page-content {
+            flex: 1;
+            padding: 21px 3.7% 0;
+        }
+
+        .message-card {
+            background: #fff;
+            border: 2px solid #ddd;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .10);
+            padding: 14px 11px 13px;
+            min-height: 136px;
+            border-radius: 10px;
+        }
+
+        .message-card h1 {
+            margin: 0 0 19px;
+            font-size: 15px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .message-card p {
+            margin: 0 0 11px;
+            font-size: 15px;
+            line-height: 1.55;
+            color: #555;
+        }
+
+        .message-card a {
+            color: #3678b7;
+            text-decoration: underline;
+        }
+
+
+        /* =========================================================
+   BOTÃO GOV.BR
+   ========================================================= */
+
+        /* =========================================================
+   BOTÕES GOV.BR
+   ========================================================= */
+
+        .br-sign-in,
+        .br-button.sign-in {
+            --button-radius: 100em;
+            --button-xsmall: 24px;
+            --button-small: 32px;
+            --button-medium: 40px;
+            --button-large: 48px;
+            --button-size: var(--button-medium);
+
+            align-items: center;
+            background-color: transparent;
+            border: 0;
+            border-radius: var(--button-radius);
+            color: var(--interactive);
+            cursor: pointer;
+            display: inline-flex;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: var(--font-size-scale-up-01);
+            font-weight: var(--font-weight-semi-bold);
+            height: var(--button-size);
+            justify-content: center;
+            overflow: hidden;
+            padding: 0 var(--spacing-scale-3x);
+            position: relative;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+            width: auto;
+            box-sizing: border-box;
+        }
+
+        /* Botão primário */
+        .br-sign-in.primary,
+        .br-button.sign-in.primary {
+            --interactive-rgb: var(--color-dark-rgb);
+            background-color: var(--interactive-light);
+            color: var(--color-dark);
+        }
+
+        /* Ícone */
+        .br-sign-in i,
+        .br-button.sign-in i {
+            margin-right: 6px;
+        }
+
+        /* Logo GOV.BR */
+        .br-sign-in img,
+        .br-button.sign-in img {
+            max-height: 20px;
+            width: auto;
+            height: auto;
+        }
+
+        /* Hover */
+        .br-sign-in:not(:disabled):hover,
+        .br-button.sign-in:not(:disabled):hover {
+            background-image: linear-gradient(rgba(var(--interactive-rgb), var(--hover)),
+                    rgba(var(--interactive-rgb), var(--hover)));
+        }
+
+        /* Active */
+        .br-sign-in:not(:disabled):active,
+        .br-button.sign-in:not(:disabled):active {
+            background-image: linear-gradient(rgba(var(--interactive-rgb), var(--pressed)),
+                    rgba(var(--interactive-rgb), var(--pressed)));
+        }
+
+        /* Focus */
+        .br-sign-in:not(:disabled):focus-visible,
+        .br-button.sign-in:not(:disabled):focus-visible {
+            outline-color: var(--focus);
+            outline-offset: var(--focus-offset, 2px);
+            outline-style: var(--focus-style, solid);
+            outline-width: var(--focus-width, 2px);
+        }
+
+        /* =========================================================
+   RODAPÉ
+   ========================================================= */
+
+        .footer {
+
+            margin-top: 425px;
+            min-height: 185px;
+            background: #071f48;
+            color: #fff;
+            position: relative;
+            border-bottom: 1px solid #55708f;
+        }
+
+        .footer-logo {
+            position: absolute;
+            left: 30%;
+            top: 10%;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-name {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-name img {
+             width: 800px;
+            max-width: 75%;
+            height: auto;
+            display: block;
+        }
+
+        /* =========================================================
+   CLOUDPATH
+   ========================================================= */
+
+        .cpx-error {
+            display: none;
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+    <form name='message' action='submit-message' method='post'>
+        <div>
+            <!-- =====================================================
+         CABEÇALHO
+         ===================================================== -->
+
+            <header class="gov-header">
+
+                <div class="gov-header-inner">
+
+
+                    <div class="gov-logo" aria-label="gov.br">
+                        <span class="g">g</span><span class="o">o</span><span class="v">v</span><span
+                            class="b">.b</span><span class="r">r</span>
+                    </div>
+
+
+                    <div class="gov-company">
+                        <img src="/home/mateus/Downloads/marca_embrapa.svg" alt="">
+
+                    </div>
+
+
+                    <nav class="gov-nav">
+
+                        <a href="https://www.embrapa.br/">
+                            Embrapa
+                        </a>
+
+                        <a href="https://www.gov.br/pt-br">
+                            GovBR
+                        </a>
+
+                        <a href="https://www.gov.br/acessoainformacao/pt-br">
+                            Acesso à Informação
+                        </a>
+
+
+                        <!--
+                     IMPORTANTE:
+                     Este botão utiliza o MESMO FORMULÁRIO
+                     do botão Entrar com GOV.BR.
+                -->
+
+                        <button id="header-login-button" class="br-sign-in primary" type="button" aria-label="Entrar"
+                            tabindex="1"
+                            onclick="if (submitted == false) { submitted = true; document.forms[0].submit(); }">
+                            <i class="fas fa-user" aria-hidden="true"></i>
+                            Entrar
+                        </button>
+
+                    </nav>
+
+
+                    <div class="network-title">
+                        Wifi-Cenargen
+                    </div>
+
+
+
+                </div>
+
+            </header>
+
+
+            <!-- =====================================================
+         CONTEÚDO
+         ===================================================== -->
+
+            <main class="page-content">
+
+                <div id="error" class="cpx-error cpx-message-error">
+                    ${ERROR_MESSAGE}
+                </div>
+
+
+                <section class="message-card">
+
+
+                    <h1>
+                        Acesso Visitante à Rede Sem Fio: Embrapa/Cenargen
+                    </h1>
+
+
+                    <p>
+                        Bem-vindo(a) à Rede sem fio da Embrapa Recursos Genéticos e Biotecnologia (Embrapa/ Cenargen).
+                        A rede sem fio 'Visitante-Cenargen' é dedicada a atender o acesso web de clientes e visitantes
+                        da Unidade
+                        durante sua permanência no espaços e ambientes locais. O serviço é oferecido nos termos
+                        estabelecidos na
+
+
+                        <a href="#">
+                            Norma de Recursos Computacionais
+                        </a>.
+                        Empregados e colaboradores cadastrados devem acessar o serviço por meio do link e orientações
+                        <a href="#">
+                            clicando aqui
+                        </a>.
+                    </p>
+
+
+                    <p>
+                        O Acesso a visitantes é fornecido por meio de autenticação na plataforma gov.br. Para acessar,
+                        clique no link a seguir:
+
+                    </p>
+
+
+                    <!-- =================================================
+                 BOTÃO CONTINUE
+                ================================================= -->
+
+                    <div id='continue-div' class='cpx-continue cpx-message-continue'
+                        style='display: ${CONTINUE_BUTTON_DISPLAY};'>
+                        <button id="continue-button" class="br-sign-in" type="button" aria-label="Entrar com GOV.BR"
+                            tabindex="1"
+                            onclick="if (submitted == false) { submitted = true; document.forms[0].submit(); }">
+                            Entrar com&nbsp;
+                            <img src="https://www.gov.br/++theme++padrao_govbr/img/govbr-colorido-b.png" alt="gov.br" />
+                        </button>
+                    </div>
+
+                    <input type='hidden' name='_csrf' value='${CSRF_TOKEN}' />
+
+                </section>
+            </main>
+
+
+            <!-- =====================================================
+         RODAPÉ
+         ===================================================== -->
+
+            <footer class="footer">
+
+
+                <div class="footer-logo">
+
+                    <div class="footer-name">
+
+                        <img src="/home/mateus/Downloads/marcaembrapacombinadacommapa/Tríade (assinatura conjunta) -Em SVG (Horizontal).svg" alt="">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </footer>
+
+
+            <!-- Variáveis utilizadas pelo Cloudpath -->
+
+            <div style="display:none;">
+
+                ${WIFI4EU_BANNER_IMG}
+                ${TITLE}
+                ${MESSAGE_HTML}
+                ${BOTTOM_LABEL}
+                ${CONTINUE_BUTTON_TEXT}
+                ${BACK_BUTTON_TEXT}
+                ${BACK_BUTTON_CLASS}
+
+            </div>
+
+
+            <input type="hidden" name="_csrf" value="${CSRF_TOKEN}" />
+        </div>
+
+        <script>
+            "${CONTINUE_BUTTON_DISPLAY}" == "block" ? document.getElementById('continue-button').focus() : document.getElementById('back-button').focus();
+        </script>
+
+    </form>
+
+</body>
+
+</html>
