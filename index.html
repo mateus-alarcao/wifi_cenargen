@@ -32,8 +32,7 @@
 
         body {
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+          
         }
 
         form[name="message"] {
@@ -44,9 +43,6 @@
 
         form[name="message"] > div {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
         }
 
         .gov-header {
@@ -69,7 +65,6 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            flex-shrink: 0;
         }
 
         .gov-logo {
@@ -98,7 +93,6 @@
             font-size: 11px;
             color: #555;
             min-width: 0;
-            flex-shrink: 1;
         }
 
         .gov-company img {
@@ -169,7 +163,6 @@
         .network-title {
             position: static;
             margin-top: 2px;
-            margin-left: 0;
             font-size: 13px;
             color: #444;
         }
@@ -295,7 +288,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
             padding: 30px 20px;
         }
 
@@ -328,12 +320,10 @@
 
             .gov-header {
                 height: auto;
-                min-height: 92px;
             }
 
             .gov-header-inner {
                 height: auto;
-                min-height: 92px;
                 padding: 10px 20px 15px;
                 flex-wrap: wrap;
             }
@@ -346,12 +336,10 @@
                 padding-left: 15px;
                 margin-top: 10px;
                 height: 40px;
-                flex-shrink: 1;
             }
 
             .gov-company img {
                 width: clamp(90px, 18vw, 120px);
-                max-width: 100%;
             }
 
             .gov-nav {
@@ -386,7 +374,6 @@
 
             .footer-name img {
                 width: min(500px, 80vw);
-                max-width: 100%;
             }
         }
 
@@ -420,9 +407,7 @@
             }
 
             .gov-company img {
-                width: min(120px, 55vw);
-                max-width: 100%;
-                height: auto;
+                width: 120px;
             }
 
             .gov-nav {
@@ -449,8 +434,6 @@
 
             .message-card {
                 padding: 22px 18px;
-                min-height: auto;
-                border-radius: 8px;
             }
 
             .message-card h1 {
@@ -491,65 +474,12 @@
             .footer {
                 min-height: 140px;
                 padding: 25px 15px;
+                
+
             }
 
             .footer-name img {
                 width: min(320px, 85vw);
-                max-width: 100%;
-                height: auto;
-            }
-        }
-
-        @media (max-width: 400px) {
-
-            .gov-header-inner {
-                padding-left: 10px;
-                padding-right: 10px;
-            }
-
-            .gov-logo img {
-                width: 70px;
-            }
-
-            .gov-company img {
-                width: min(105px, 50vw);
-                max-width: 100%;
-            }
-
-            .gov-nav {
-                gap: 3px;
-            }
-
-            .gov-nav a {
-                font-size: 12px;
-            }
-
-            .message-card {
-                padding: 18px 14px;
-            }
-
-            .message-card h1 {
-                font-size: 16px;
-            }
-
-            .message-card p {
-                font-size: 13px;
-            }
-
-            .br-sign-in,
-            .br-button.sign-in {
-                width: 100%;
-                max-width: 100%;
-            }
-
-            .footer {
-                min-height: 120px;
-                padding: 20px 10px;
-            }
-
-            .footer-name img {
-                width: min(280px, 85vw);
-                max-width: 100%;
             }
         }
     </style>
